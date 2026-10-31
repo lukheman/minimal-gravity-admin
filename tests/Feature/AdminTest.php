@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 test('the landing page renders with its styles', function () {
     $this->get('/')
         ->assertOk()
-        ->assertSee('Build Beautiful')
+        ->assertSee('Membuat momen penting terasa lebih berarti.')
         ->assertSee('.hero {', false);
 });
 

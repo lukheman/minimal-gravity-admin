@@ -1,234 +1,277 @@
-<x-layouts.guest title="AdminPro - Modern Admin Dashboard Template">
-    <div class="mt-4">
-    <!-- Hero Section -->
+@php
+    $heroEyebrow = $settings['hero_eyebrow'] ?? 'Event organizer untuk momen penting';
+    $heroTitle = $settings['hero_title'] ?? 'Membuat momen penting terasa lebih berarti.';
+    $heroSubtitle = $settings['hero_subtitle'] ?? 'Kami merancang dan menyelenggarakan acara yang rapi, hangat, dan meninggalkan kesan — dari pelatihan hingga penyewaan perlengkapan.';
+    $waUrl = \App\Support\SiteContent::whatsappUrl($settings);
+    $featured = $collaborations->first();
+    $categoryIcons = [
+        'pelatihan' => 'fa-solid fa-chalkboard-user',
+        'workshop' => 'fa-solid fa-screwdriver-wrench',
+        'seminar' => 'fa-solid fa-microphone-lines',
+        'penyewaan' => 'fa-solid fa-box-open',
+    ];
+@endphp
+
+<x-layouts.public :title="($settings['site_name'] ?? 'Nusa Event Organizer').' — Wujudkan Acara Berkesan'" :settings="$settings">
     <section class="hero">
-        <div class="hero-bg">
-            <div class="hero-shape shape-1"></div>
-            <div class="hero-shape shape-2"></div>
-            <div class="hero-shape shape-3"></div>
-        </div>
-        <div class="container hero-container">
-            <div class="hero-content">
-                <span class="hero-badge">
-                    <i class="fas fa-sparkles"></i>
-                    New Version 2.0 is Here!
-                </span>
-                <h1 class="hero-title">
-                    Build Beautiful
-                    <span class="gradient-text">Admin Dashboards</span>
-                    In Minutes
-                </h1>
-                <p class="hero-description">
-                    A modern, elegant admin dashboard template built with Laravel 12 and Bootstrap 5.
-                    Features dark mode, 18+ reusable components, and user management out of the box.
-                </p>
-                <div class="hero-actions">
-                    <a href="{{ route('login') }}" class="btn btn-primary btn-lg">
-                        <i class="fas fa-rocket"></i>
-                        Get Started Free
-                    </a>
-                    <a href="#features" class="btn btn-outline btn-lg">
-                        <i class="fas fa-play-circle"></i>
-                        Watch Demo
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-value">18+</span>
-                        <span class="stat-label">Components</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-value">Dark/Light</span>
-                        <span class="stat-label">Theme Support</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-value">100%</span>
-                        <span class="stat-label">Responsive</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="dashboard-preview">
-                    <div class="preview-header">
-                        <div class="preview-dots">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                        </div>
-                    </div>
-                    <div class="preview-content">
-                        <div class="preview-sidebar">
-                            <div class="sidebar-item active"></div>
-                            <div class="sidebar-item"></div>
-                            <div class="sidebar-item"></div>
-                            <div class="sidebar-item"></div>
-                        </div>
-                        <div class="preview-main">
-                            <div class="preview-cards">
-                                <div class="preview-card card-1"></div>
-                                <div class="preview-card card-2"></div>
-                                <div class="preview-card card-3"></div>
-                            </div>
-                            <div class="preview-chart"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="section features-section" id="features">
         <div class="container">
-            <div class="section-header">
-                <span class="section-badge">Features</span>
-                <h2 class="section-title">Everything You Need to Build Amazing Dashboards</h2>
-                <p class="section-description">
-                    Packed with features that help you build professional admin interfaces faster than ever.
-                </p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
-                        <i class="fas fa-moon"></i>
-                    </div>
-                    <h3>Dark Mode</h3>
-                    <p>Beautiful dark theme with smooth transitions. User preference is saved automatically.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #0ea5e9, #06b6d4);">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Laravel Powered</h3>
-                    <p>Built on a clean Laravel backend with controllers, routing, validation, and Blade views.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #10b981, #34d399);">
-                        <i class="fas fa-puzzle-piece"></i>
-                    </div>
-                    <h3>18+ Components</h3>
-                    <p>Reusable Blade components for cards, tables, buttons, modals, and more.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>User Management</h3>
-                    <p>Full CRUD operations with search, pagination, and form validation out of the box.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #ef4444, #f87171);">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Responsive Design</h3>
-                    <p>Perfect on any device with mobile-first approach and collapsible sidebar.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Authentication Ready</h3>
-                    <p>Modern login system with form validation, remember me, and session management.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <span class="eyebrow d-inline-block mb-3">{{ $heroEyebrow }}</span>
+                    <h1 class="display-3 mb-3">{{ $heroTitle }}</h1>
+                    <p class="lead text-secondary mb-4">{{ $heroSubtitle }}</p>
 
-    <!-- Components Section -->
-    <section class="section components-section" id="components">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-badge">Components</span>
-                <h2 class="section-title">Beautiful, Reusable UI Components</h2>
-                <p class="section-description">
-                    All components are built with accessibility and customization in mind.
-                </p>
-            </div>
-            <div class="components-showcase">
-                <div class="component-preview-card">
-                    <h4>Buttons</h4>
-                    <div class="component-demo">
-                        <button class="demo-btn primary">Primary</button>
-                        <button class="demo-btn secondary">Secondary</button>
-                        <button class="demo-btn success">Success</button>
-                        <button class="demo-btn warning">Warning</button>
-                        <button class="demo-btn danger">Danger</button>
-                    </div>
-                </div>
-                <div class="component-preview-card">
-                    <h4>Badges</h4>
-                    <div class="component-demo">
-                        <span class="demo-badge primary"><i class="fas fa-circle"></i> Active</span>
-                        <span class="demo-badge success"><i class="fas fa-check"></i> Completed</span>
-                        <span class="demo-badge warning"><i class="fas fa-clock"></i> Pending</span>
-                        <span class="demo-badge danger"><i class="fas fa-times"></i> Cancelled</span>
-                    </div>
-                </div>
-                <div class="component-preview-card">
-                    <h4>Alerts</h4>
-                    <div class="component-demo column">
-                        <div class="demo-alert success">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Your changes have been saved successfully.</span>
-                        </div>
-                        <div class="demo-alert warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            <span>Please review your settings before continuing.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="component-preview-card">
-                    <h4>Progress Bars</h4>
-                    <div class="component-demo column">
-                        <div class="demo-progress">
-                            <div class="progress-label">
-                                <span>Project Progress</span>
-                                <span>75%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill"
-                                    style="width: 75%; background: linear-gradient(90deg, #6366f1, #8b5cf6);"></div>
-                            </div>
-                        </div>
-                        <div class="demo-progress">
-                            <div class="progress-label">
-                                <span>Storage Used</span>
-                                <span>45%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill"
-                                    style="width: 45%; background: linear-gradient(90deg, #0ea5e9, #06b6d4);"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="section cta-section">
-        <div class="container">
-            <div class="cta-card">
-                <div class="cta-content">
-                    <h2>Ready to Build Something Amazing?</h2>
-                    <p>Get started with AdminPro today and create stunning admin dashboards in minutes.</p>
-                    <div class="cta-actions">
-                        <a href="{{ route('login') }}" class="btn btn-white btn-lg">
-                            <i class="fas fa-rocket"></i>
-                            Get Started Free
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        <a class="btn btn-main" href="{{ $waUrl }}" target="_blank" rel="noopener">
+                            <i class="fa-brands fa-whatsapp me-1"></i> Konsultasi via WhatsApp
                         </a>
-                        <a href="#" class="btn btn-outline-white btn-lg">
-                            <i class="fab fa-github"></i>
-                            View on GitHub
+                        <a class="btn btn-ghost" href="{{ route('services') }}">Lihat layanan</a>
+                    </div>
+
+                    <p class="small text-secondary mb-3">
+                        <i class="fa-solid fa-circle-check me-1" style="color: var(--teal)"></i>
+                        {{ $settings['hero_note'] ?? 'Dipercaya instansi, sekolah, perusahaan, dan komunitas.' }}
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-4 pt-2">
+                        <div>
+                            <div class="stat-value">{{ $stats['collaborations'] }}</div>
+                            <div class="small text-secondary">Kegiatan terlaksana</div>
+                        </div>
+                        <div>
+                            <div class="stat-value">{{ $stats['partners'] }}</div>
+                            <div class="small text-secondary">Mitra kerja sama</div>
+                        </div>
+                        <div>
+                            <div class="stat-value">{{ $stats['services'] }}</div>
+                            <div class="small text-secondary">Layanan tersedia</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    @if ($featured)
+                        <div class="card-clean p-3 p-md-4">
+                            <div class="media-frame mb-3">
+                                @if ($featured->coverUrl())
+                                    <img src="{{ $featured->coverUrl() }}" alt="Foto kegiatan {{ $featured->event_name }}" loading="lazy">
+                                @else
+                                    <i class="fa-solid fa-images"></i>
+                                @endif
+                            </div>
+                            <div class="d-flex justify-content-between align-items-start gap-3">
+                                <div>
+                                    <span class="eyebrow">Sorotan acara</span>
+                                    <h2 class="h4 mt-1 mb-1">{{ $featured->event_name }}</h2>
+                                    <div class="text-secondary small">{{ $featured->partner_name }}</div>
+                                </div>
+                                <span class="badge rounded-pill px-3 py-2" style="background: var(--mint); color: var(--teal)">
+                                    {{ $featured->event_date->format('Y') }}
+                                </span>
+                            </div>
+                            <p class="text-secondary small mt-3 mb-3">{{ \Illuminate\Support\Str::limit($featured->description, 110) }}</p>
+                            <a class="text-link" href="{{ route('collaborations.show', $featured) }}">
+                                Lihat cerita kegiatan <i class="fa-solid fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    @else
+                        <div class="card-clean p-4 p-md-5" style="background: var(--teal); color: #fff;">
+                            <span class="eyebrow" style="color: #f3c77e">Sejak awal</span>
+                            <h2 class="mt-3">Satu partner untuk seluruh kebutuhan acara.</h2>
+                            <p class="mb-0 opacity-75">Pelatihan, workshop, seminar, dan penyewaan perlengkapan — dikelola dalam satu alur kerja yang jelas.</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="layanan">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+                <div class="section-head">
+                    <span class="eyebrow">Yang kami kerjakan</span>
+                    <h2 class="display-6 mt-2 mb-2">Layanan untuk setiap kebutuhan acara</h2>
+                    <p class="text-secondary mb-0">Mulai dari peningkatan kapasitas tim hingga penyewaan perlengkapan.</p>
+                </div>
+                <a class="text-link text-nowrap" href="{{ route('services') }}">Lihat semua layanan <i class="fa-solid fa-arrow-right ms-1"></i></a>
+            </div>
+
+            <div class="row g-4">
+                @forelse ($services as $service)
+                    <div class="col-md-6 col-lg-3">
+                        <a class="card-clean p-4 d-flex flex-column text-decoration-none text-dark" href="{{ route('services.show', $service) }}">
+                            <div class="icon-box mb-3">
+                                <i class="{{ $categoryIcons[$service->category] ?? 'fa-solid fa-calendar-check' }}"></i>
+                            </div>
+                            <span class="eyebrow mb-2">{{ ucfirst($service->category) }}</span>
+                            <h3 class="h5">{{ $service->name }}</h3>
+                            <p class="text-secondary small mb-3">{{ \Illuminate\Support\Str::limit($service->description, 90) }}</p>
+
+                            @if (! empty($service->features))
+                                <ul class="list-unstyled small text-secondary mb-3">
+                                    @foreach (array_slice($service->features, 0, 2) as $feature)
+                                        <li class="mb-1"><i class="fa-solid fa-check me-2" style="color: var(--teal)"></i>{{ $feature }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+
+                            <span class="text-link mt-auto">Selengkapnya <i class="fa-solid fa-arrow-right ms-1"></i></span>
                         </a>
                     </div>
+                @empty
+                    @foreach (['Pelatihan', 'Workshop', 'Seminar', 'Penyewaan'] as $name)
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card-clean p-4">
+                                <div class="icon-box mb-3"><i class="fa-solid fa-calendar-check"></i></div>
+                                <h3 class="h5">{{ $name }}</h3>
+                                <p class="text-secondary small mb-0">Layanan profesional untuk acara yang berdampak.</p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-soft">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-4">
+                    <span class="eyebrow">Cara kami bekerja</span>
+                    <h2 class="display-6 mt-2">Proses jelas, Anda tetap tenang.</h2>
+                    <p class="text-secondary">Kami menjaga komunikasi dan detail agar setiap tahap acara berjalan sesuai rencana.</p>
+                    <a class="btn btn-main mt-2" href="{{ $waUrl }}" target="_blank" rel="noopener">Mulai konsultasi</a>
                 </div>
-                <div class="cta-decoration">
-                    <div class="decoration-circle"></div>
-                    <div class="decoration-circle small"></div>
+                <div class="col-lg-8">
+                    <div class="row g-3">
+                        @foreach ([
+                            ['icon' => 'fa-comments', 'title' => 'Konsultasi kebutuhan', 'text' => 'Ceritakan tujuan, peserta, dan anggaran acara Anda.'],
+                            ['icon' => 'fa-list-check', 'title' => 'Rencana yang matang', 'text' => 'Kami susun konsep, rundown, dan kebutuhan teknis secara terperinci.'],
+                            ['icon' => 'fa-calendar-check', 'title' => 'Eksekusi di hari-H', 'text' => 'Tim hadir memastikan acara berjalan rapi dari awal hingga selesai.'],
+                        ] as $step)
+                            <div class="col-md-4">
+                                <div class="card-clean p-4 h-100">
+                                    <div class="icon-box mb-3"><i class="fa-solid {{ $step['icon'] }}"></i></div>
+                                    <h3 class="h6">{{ $step['title'] }}</h3>
+                                    <p class="text-secondary small mb-0">{{ $step['text'] }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="kerja-sama">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+                <div class="section-head">
+                    <span class="eyebrow">Rekam jejak</span>
+                    <h2 class="display-6 mt-2 mb-2">Kerja sama yang sudah berjalan</h2>
+                    <p class="text-secondary mb-0">Lihat kegiatan yang telah kami selenggarakan bersama mitra.</p>
+                </div>
+                <a class="text-link text-nowrap" href="{{ route('collaborations') }}">Lihat semua kerja sama <i class="fa-solid fa-arrow-right ms-1"></i></a>
+            </div>
+
+            <div class="row g-4">
+                @forelse ($collaborations as $collaboration)
+                    <div class="col-md-6 col-lg-4">
+                        <a class="card-clean p-3 d-flex flex-column text-decoration-none text-dark" href="{{ route('collaborations.show', $collaboration) }}">
+                            <div class="media-frame mb-3 position-relative">
+                                @if ($collaboration->coverUrl())
+                                    <img src="{{ $collaboration->coverUrl() }}" alt="Foto kegiatan {{ $collaboration->event_name }}" loading="lazy">
+                                @else
+                                    <i class="fa-solid fa-camera-retro"></i>
+                                @endif
+                                <span class="badge rounded-pill position-absolute top-0 start-0 m-2 px-2 py-1" style="background: rgba(16, 42, 43, .8);">
+                                    {{ $collaboration->event_date->format('d M Y') }}
+                                </span>
+                            </div>
+                            <span class="eyebrow mb-1">{{ $collaboration->partner_name }}</span>
+                            <h3 class="h5">{{ $collaboration->event_name }}</h3>
+                            <p class="text-secondary small mb-3">{{ \Illuminate\Support\Str::limit($collaboration->description, 95) }}</p>
+                            <span class="text-link mt-auto">Lihat galeri <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                        </a>
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="card-clean p-5 text-center">
+                            <i class="fa-solid fa-handshake-angle mb-3" style="font-size: 2rem; color: var(--teal)"></i>
+                            <h3 class="h5">Portofolio sedang kami siapkan</h3>
+                            <p class="text-secondary mb-0">Hubungi kami untuk mengetahui kegiatan yang pernah kami tangani.</p>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-soft" id="testimoni">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+                <div class="section-head">
+                    <span class="eyebrow">Testimoni</span>
+                    <h2 class="display-6 mt-2 mb-2">Kata mereka yang sudah bekerja bersama kami</h2>
+                    <p class="text-secondary mb-0">Pengalaman mitra adalah bagian penting dari cara kami bekerja.</p>
+                </div>
+                <a class="text-link text-nowrap" href="{{ route('testimonials') }}">Lihat semua testimoni <i class="fa-solid fa-arrow-right ms-1"></i></a>
+            </div>
+
+            <div class="row g-4">
+                @forelse ($testimonials as $testimonial)
+                    <div class="col-md-4">
+                        <div class="card-clean p-4 h-100 d-flex flex-column">
+                            <div class="mb-3" style="color: var(--gold);">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <i class="fa-{{ $i <= ($testimonial->rating ?? 5) ? 'solid' : 'regular' }} fa-star"></i>
+                                @endfor
+                            </div>
+                            <p class="flex-grow-1">“{{ $testimonial->comment }}”</p>
+                            <div class="d-flex align-items-center gap-2 mt-2">
+                                @if ($testimonial->photoUrl())
+                                    <img src="{{ $testimonial->photoUrl() }}" alt="Foto {{ $testimonial->name }}" width="42" height="42" class="rounded-circle" style="object-fit: cover;" loading="lazy">
+                                @else
+                                    <div class="rounded-circle d-grid place-items-center" style="width: 42px; height: 42px; background: var(--mint); color: var(--teal); display: grid; place-items: center; font-weight: 700;">
+                                        {{ $testimonial->initials() }}
+                                    </div>
+                                @endif
+                                <div>
+                                    <div class="fw-semibold">{{ $testimonial->name }}</div>
+                                    <div class="small text-secondary">{{ $testimonial->organization }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="card-clean p-5 text-center">
+                            <i class="fa-solid fa-quote-left mb-3" style="font-size: 2rem; color: var(--teal)"></i>
+                            <h3 class="h5">Jadilah mitra berikutnya</h3>
+                            <p class="text-secondary mb-0">Kami siap membantu merencanakan acara Anda.</p>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="cta-band p-4 p-md-5">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <span class="eyebrow" style="color: #f3c77e">Langkah berikutnya</span>
+                        <h2 class="display-6 text-white mt-2 mb-2">Siap merencanakan acara Anda?</h2>
+                        <p class="mb-0 text-white-50">Ceritakan kebutuhan Anda. Kami akan membantu menyusun rencana yang sesuai.</p>
+                    </div>
+                    <div class="col-lg-4 d-flex flex-column flex-sm-row flex-lg-column gap-2 justify-content-lg-end">
+                        <a class="btn btn-light" href="{{ $waUrl }}" target="_blank" rel="noopener">
+                            <i class="fa-brands fa-whatsapp me-1"></i> Konsultasi via WhatsApp
+                        </a>
+                        <a class="btn btn-outline-light" href="{{ route('contact') }}">Lihat kontak</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -236,639 +279,34 @@
 
     @push('styles')
         <style>
-            /* Hero Section */
-            .hero {
-                min-height: 100vh;
-                display: flex;
-                align-items: center;
+            .cta-band {
+                background: linear-gradient(120deg, var(--teal), #123f3d);
+                border-radius: 1.5rem;
                 position: relative;
                 overflow: hidden;
-                padding-top: 80px;
             }
 
-            .hero-bg {
+            .cta-band::after {
+                content: '';
                 position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                z-index: 0;
-            }
-
-            .hero-shape {
-                position: absolute;
+                width: 18rem;
+                height: 18rem;
                 border-radius: 50%;
-                animation: float 20s ease-in-out infinite;
+                right: -6rem;
+                top: -6rem;
+                background: rgba(217, 155, 75, .18);
             }
 
-            .shape-1 {
-                width: 600px;
-                height: 600px;
-                background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-                top: -200px;
-                right: -200px;
-            }
-
-            .shape-2 {
-                width: 400px;
-                height: 400px;
-                background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(6, 182, 212, 0.1));
-                bottom: -100px;
-                left: -100px;
-                animation-delay: -7s;
-            }
-
-            .shape-3 {
-                width: 300px;
-                height: 300px;
-                background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1));
-                top: 50%;
-                left: 30%;
-                animation-delay: -14s;
-            }
-
-            @keyframes float {
-
-                0%,
-                100% {
-                    transform: translateY(0) rotate(0deg);
-                }
-
-                33% {
-                    transform: translateY(-30px) rotate(5deg);
-                }
-
-                66% {
-                    transform: translateY(20px) rotate(-5deg);
-                }
-            }
-
-            .hero-container {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 4rem;
-                align-items: center;
-                position: relative;
-                z-index: 1;
-            }
-
-            .hero-badge {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-                color: var(--bs-primary);
-                padding: 0.5rem 1rem;
-                border-radius: 50px;
-                font-size: 0.9rem;
+            .cta-band .btn {
+                border-radius: 999px;
                 font-weight: 600;
-                margin-bottom: 1.5rem;
-                border: 1px solid rgba(99, 102, 241, 0.2);
+                padding: .7rem 1.2rem;
             }
 
-            .hero-title {
-                font-size: 3.5rem;
-                font-weight: 800;
-                line-height: 1.1;
-                margin-bottom: 1.5rem;
-            }
-
-            .gradient-text {
-                background: linear-gradient(135deg, var(--bs-primary), #8b5cf6);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-
-            .hero-description {
-                font-size: 1.25rem;
-                color: var(--text-secondary);
-                margin-bottom: 2rem;
-                line-height: 1.7;
-            }
-
-            .hero-actions {
-                display: flex;
-                gap: 1rem;
-                margin-bottom: 3rem;
-            }
-
-            .hero-stats {
-                display: flex;
-                align-items: center;
-                gap: 2rem;
-            }
-
-            .stat-item {
-                text-align: center;
-            }
-
-            .stat-value {
-                display: block;
-                font-size: 1.5rem;
-                font-weight: 700;
-                color: var(--text-primary);
-            }
-
-            .stat-label {
-                font-size: 0.9rem;
-                color: var(--text-muted);
-            }
-
-            .stat-divider {
-                width: 1px;
-                height: 40px;
-                background: var(--border-color);
-            }
-
-            /* Dashboard Preview */
-            .dashboard-preview {
-                background: var(--bg-white);
-                border-radius: 20px;
-                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
-                overflow: hidden;
-                border: 1px solid var(--border-color);
-            }
-
-            .preview-header {
-                background: linear-gradient(135deg, #1e293b, #334155);
-                padding: 1rem 1.5rem;
-            }
-
-            .preview-dots {
-                display: flex;
-                gap: 8px;
-            }
-
-            .dot {
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-            }
-
-            .dot.red {
-                background: #ef4444;
-            }
-
-            .dot.yellow {
-                background: #f59e0b;
-            }
-
-            .dot.green {
-                background: #10b981;
-            }
-
-            .preview-content {
-                display: flex;
-                min-height: 300px;
-            }
-
-            .preview-sidebar {
-                width: 60px;
-                background: #1e293b;
-                padding: 1rem;
-                display: flex;
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            .sidebar-item {
-                height: 8px;
-                background: #334155;
-                border-radius: 4px;
-            }
-
-            .sidebar-item.active {
-                background: var(--bs-primary);
-            }
-
-            .preview-main {
-                flex: 1;
-                padding: 1.5rem;
-                background: #f8fafc;
-            }
-
-            [data-theme="dark"] .preview-main {
-                background: #0f172a;
-            }
-
-            .preview-cards {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .preview-card {
-                height: 60px;
-                border-radius: 10px;
-            }
-
-            .card-1 {
-                background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            }
-
-            .card-2 {
-                background: linear-gradient(135deg, #0ea5e9, #06b6d4);
-            }
-
-            .card-3 {
-                background: linear-gradient(135deg, #10b981, #34d399);
-            }
-
-            .preview-chart {
-                height: 120px;
-                background: var(--bg-white);
-                border-radius: 10px;
-                border: 1px solid var(--border-color);
-            }
-
-            /* Section Styles */
-            .section-header {
-                text-align: center;
-                max-width: 700px;
-                margin: 0 auto 4rem;
-            }
-
-            .section-badge {
-                display: inline-block;
-                background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-                color: var(--bs-primary);
-                padding: 0.5rem 1.25rem;
-                border-radius: 50px;
-                font-size: 0.85rem;
-                font-weight: 600;
-                margin-bottom: 1rem;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-bottom: 1rem;
-            }
-
-            .section-description {
-                font-size: 1.15rem;
-                color: var(--text-secondary);
-            }
-
-            /* Features Grid */
-            .features-section {
-                background: var(--bg-white);
-            }
-
-            .features-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 2rem;
-            }
-
-            .feature-card {
-                background: var(--bg-light);
-                padding: 2rem;
-                border-radius: 16px;
-                transition: all 0.3s ease;
-                border: 1px solid var(--border-color);
-            }
-
-            .feature-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            }
-
-            .feature-icon {
-                width: 60px;
-                height: 60px;
-                border-radius: 14px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-bottom: 1.5rem;
-            }
-
-            .feature-icon i {
-                font-size: 1.5rem;
-                color: white;
-            }
-
-            .feature-card h3 {
-                font-size: 1.25rem;
-                font-weight: 600;
-                margin-bottom: 0.75rem;
-            }
-
-            .feature-card p {
-                color: var(--text-secondary);
-                font-size: 0.95rem;
-            }
-
-            /* Components Showcase */
-            .components-showcase {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-
-            .component-preview-card {
-                background: var(--bg-white);
-                border-radius: 16px;
-                padding: 2rem;
-                border: 1px solid var(--border-color);
-            }
-
-            .component-preview-card h4 {
-                font-size: 1rem;
-                font-weight: 600;
-                margin-bottom: 1.5rem;
-                color: var(--text-muted);
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-
-            .component-demo {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.75rem;
-            }
-
-            .component-demo.column {
-                flex-direction: column;
-            }
-
-            .demo-btn {
-                padding: 0.625rem 1.25rem;
-                border-radius: 8px;
-                font-weight: 500;
-                font-size: 0.9rem;
-                border: none;
-                cursor: pointer;
-                transition: all 0.3s;
-            }
-
-            .demo-btn.primary {
-                background: #6366f1;
-                color: white;
-            }
-
-            .demo-btn.secondary {
-                background: #64748b;
-                color: white;
-            }
-
-            .demo-btn.success {
-                background: #10b981;
-                color: white;
-            }
-
-            .demo-btn.warning {
-                background: #f59e0b;
-                color: white;
-            }
-
-            .demo-btn.danger {
-                background: #ef4444;
-                color: white;
-            }
-
-            .demo-badge {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                padding: 0.5rem 1rem;
-                border-radius: 50px;
-                font-size: 0.8rem;
-                font-weight: 600;
-            }
-
-            .demo-badge.primary {
-                background: rgba(99, 102, 241, 0.15);
-                color: #6366f1;
-            }
-
-            .demo-badge.success {
-                background: rgba(16, 185, 129, 0.15);
-                color: #10b981;
-            }
-
-            .demo-badge.warning {
-                background: rgba(245, 158, 11, 0.15);
-                color: #f59e0b;
-            }
-
-            .demo-badge.danger {
-                background: rgba(239, 68, 68, 0.15);
-                color: #ef4444;
-            }
-
-            .demo-alert {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 1rem 1.25rem;
-                border-radius: 10px;
-                font-size: 0.9rem;
-            }
-
-            .demo-alert.success {
-                background: rgba(16, 185, 129, 0.1);
-                color: #10b981;
-            }
-
-            .demo-alert.warning {
-                background: rgba(245, 158, 11, 0.1);
-                color: #f59e0b;
-            }
-
-            .demo-progress {
-                width: 100%;
-            }
-
-            .progress-label {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 0.5rem;
-                font-size: 0.9rem;
-            }
-
-            .progress-bar {
-                height: 8px;
-                background: var(--border-color);
-                border-radius: 50px;
-                overflow: hidden;
-            }
-
-            .progress-fill {
-                height: 100%;
-                border-radius: 50px;
-            }
-
-            /* CTA Section */
-            .cta-section {
-                background: var(--bg-light);
-            }
-
-            .cta-card {
-                background: linear-gradient(135deg, #6366f1, #8b5cf6);
-                border-radius: 24px;
-                padding: 4rem;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .cta-content {
-                position: relative;
-                z-index: 1;
-                text-align: center;
-                max-width: 600px;
-                margin: 0 auto;
-            }
-
-            .cta-content h2 {
-                font-size: 2.5rem;
-                font-weight: 700;
-                color: white;
-                margin-bottom: 1rem;
-            }
-
-            .cta-content p {
-                font-size: 1.15rem;
-                color: rgba(255, 255, 255, 0.8);
-                margin-bottom: 2rem;
-            }
-
-            .cta-actions {
-                display: flex;
-                justify-content: center;
-                gap: 1rem;
-            }
-
-            .btn-white {
-                background: white;
-                color: #6366f1;
-            }
-
-            .btn-white:hover {
-                background: #f8fafc;
-                transform: translateY(-2px);
-            }
-
-            .btn-outline-white {
-                background: transparent;
-                border: 2px solid rgba(255, 255, 255, 0.3);
-                color: white;
-            }
-
-            .btn-outline-white:hover {
-                background: rgba(255, 255, 255, 0.1);
-                border-color: white;
-            }
-
-            .cta-decoration {
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                width: 50%;
-            }
-
-            .decoration-circle {
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.1);
-            }
-
-            .decoration-circle:first-child {
-                width: 400px;
-                height: 400px;
-                right: -100px;
-                top: -100px;
-            }
-
-            .decoration-circle.small {
-                width: 200px;
-                height: 200px;
-                right: 50px;
-                bottom: -50px;
-            }
-
-            /* Responsive */
-            @media (max-width: 1024px) {
-                .hero-container {
-                    grid-template-columns: 1fr;
-                    text-align: center;
-                }
-
-                .hero-title {
-                    font-size: 2.75rem;
-                }
-
-                .hero-actions {
-                    justify-content: center;
-                }
-
-                .hero-stats {
-                    justify-content: center;
-                }
-
-                .hero-image {
-                    display: none;
-                }
-
-                .features-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-
-                .components-showcase {
-                    grid-template-columns: 1fr;
-                }
-            }
-
-            @media (max-width: 768px) {
-                .hero-title {
-                    font-size: 2.25rem;
-                }
-
-                .hero-description {
-                    font-size: 1.1rem;
-                }
-
-                .hero-actions {
-                    flex-direction: column;
-                }
-
-                .hero-stats {
-                    flex-direction: column;
-                    gap: 1.5rem;
-                }
-
-                .stat-divider {
-                    width: 40px;
-                    height: 1px;
-                }
-
-                .features-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .section-title {
-                    font-size: 2rem;
-                }
-
-                .cta-card {
-                    padding: 2.5rem 1.5rem;
-                }
-
-                .cta-content h2 {
-                    font-size: 1.75rem;
-                }
-
-                .cta-actions {
-                    flex-direction: column;
-                }
+            .cta-band .btn-outline-light:hover {
+                color: var(--ink);
+                background: #fff;
             }
         </style>
     @endpush
-</div>
-</x-layouts.guest>
+</x-layouts.public>

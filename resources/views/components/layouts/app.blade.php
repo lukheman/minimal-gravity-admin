@@ -539,6 +539,8 @@
         <x-layout.sidebar-section title="Main">
             <x-layout.sidebar-link href="{{ route('dashboard') }}" icon="fas fa-home" :active="request()->routeIs('dashboard')">Dashboard</x-layout.sidebar-link>
             <x-layout.sidebar-link href="{{ route('admin.users') }}" icon="fas fa-users" :active="request()->routeIs('admin.users')">Users</x-layout.sidebar-link>
+            <x-layout.sidebar-link href="{{ route('admin.content.index', 'services') }}" icon="fas fa-calendar-check" :active="request()->is('admin/content/*')">Konten EO</x-layout.sidebar-link>
+            <x-layout.sidebar-link href="{{ route('admin.settings') }}" icon="fas fa-sliders" :active="request()->routeIs('admin.settings*')">Profil & Kontak</x-layout.sidebar-link>
         </x-layout.sidebar-section>
 
         <x-layout.sidebar-section title="Account">
