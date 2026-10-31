@@ -11,6 +11,7 @@ use App\Models\SocialLink;
 use App\Models\Testimonial;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -159,7 +160,7 @@ class ContentController extends Controller
         return $data;
     }
 
-    private function rentalServices(string $resource)
+    private function rentalServices(string $resource): Collection
     {
         if ($resource !== 'rental-items') {
             return collect();
