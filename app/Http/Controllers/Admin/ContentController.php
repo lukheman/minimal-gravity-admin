@@ -4,17 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Collaboration;
+use App\Models\RentalItem;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\SocialLink;
 use App\Models\Testimonial;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ContentController extends Controller
 {
     private const RESOURCES = [
+        'rental-items' => ['title' => 'Item Sewa', 'model' => RentalItem::class, 'fields' => ['service_id', 'category', 'name', 'description', 'photo', 'sort_order', 'is_active']],
         'services' => ['title' => 'Layanan', 'model' => Service::class, 'fields' => ['category', 'name', 'slug', 'description', 'features', 'sort_order', 'is_active']],
         'collaborations' => ['title' => 'Kerja Sama', 'model' => Collaboration::class, 'fields' => ['partner_name', 'event_name', 'slug', 'event_date', 'service_category', 'description', 'is_active']],
         'testimonials' => ['title' => 'Testimoni', 'model' => Testimonial::class, 'fields' => ['name', 'organization', 'comment', 'rating', 'is_active']],
@@ -31,13 +35,23 @@ class ContentController extends Controller
 
     public function create(string $resource): View
     {
-        return view('admin.content.form', ['resource' => $resource, 'config' => $this->config($resource), 'record' => null]);
+        return view('admin.content.form', [
+            'resource' => $resource,
+            'config' => $this->config($resource),
+            'record' => null,
+            'rentalServices' => $this->rentalServices($resource),
+        ]);
     }
 
     public function store(Request $request, string $resource): RedirectResponse
     {
         $config = $this->config($resource);
         $data = $this->validated($request, $resource);
+
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('rental', 'public');
+        }
+
         $config['model']::create($data);
 
         return redirect()->route('admin.content.index', $resource)->with('success', $config['title'].' berhasil ditambahkan.');
@@ -47,14 +61,29 @@ class ContentController extends Controller
     {
         $config = $this->config($resource);
 
-        return view('admin.content.form', ['resource' => $resource, 'config' => $config, 'record' => $config['model']::findOrFail($id)]);
+        return view('admin.content.form', [
+            'resource' => $resource,
+            'config' => $config,
+            'record' => $config['model']::findOrFail($id),
+            'rentalServices' => $this->rentalServices($resource),
+        ]);
     }
 
     public function update(Request $request, string $resource, int $id): RedirectResponse
     {
         $config = $this->config($resource);
         $record = $config['model']::findOrFail($id);
-        $record->update($this->validated($request, $resource));
+        $data = $this->validated($request, $resource);
+
+        if ($request->hasFile('photo')) {
+            if ($record->photo) {
+                Storage::disk('public')->delete($record->photo);
+            }
+
+            $data['photo'] = $request->file('photo')->store('rental', 'public');
+        }
+
+        $record->update($data);
 
         return redirect()->route('admin.content.index', $resource)->with('success', $config['title'].' berhasil diperbarui.');
     }
@@ -62,7 +91,13 @@ class ContentController extends Controller
     public function destroy(string $resource, int $id): RedirectResponse
     {
         $config = $this->config($resource);
-        $config['model']::findOrFail($id)->delete();
+        $record = $config['model']::findOrFail($id);
+
+        if ($record->photo) {
+            Storage::disk('public')->delete($record->photo);
+        }
+
+        $record->delete();
 
         return back()->with('success', $config['title'].' berhasil dihapus.');
     }
@@ -109,6 +144,7 @@ class ContentController extends Controller
     private function validated(Request $request, string $resource): array
     {
         $rules = match ($resource) {
+            'rental-items' => ['service_id' => ['required', 'exists:services,id'], 'category' => ['nullable', Rule::in(array_keys(config('rental.categories')))], 'name' => ['required', 'string', 'max:255'], 'description' => ['nullable', 'string'], 'photo' => ['nullable', 'image', 'max:2048'], 'sort_order' => ['nullable', 'integer'], 'is_active' => ['nullable', 'boolean']],
             'services' => ['category' => ['required', 'in:pelatihan,workshop,seminar,penyewaan'], 'name' => ['required', 'string', 'max:255'], 'slug' => ['required', 'string', 'max:255'], 'description' => ['required', 'string'], 'features' => ['nullable', 'string'], 'sort_order' => ['nullable', 'integer'], 'is_active' => ['nullable', 'boolean']],
             'collaborations' => ['partner_name' => ['required', 'string'], 'event_name' => ['required', 'string'], 'slug' => ['required', 'string'], 'event_date' => ['required', 'date'], 'service_category' => ['nullable', 'string'], 'description' => ['nullable', 'string'], 'is_active' => ['nullable', 'boolean']],
             'testimonials' => ['name' => ['required', 'string'], 'organization' => ['nullable', 'string'], 'comment' => ['required', 'string'], 'rating' => ['nullable', 'integer', 'between:1,5'], 'is_active' => ['nullable', 'boolean']],
@@ -121,5 +157,17 @@ class ContentController extends Controller
         $data['is_active'] = $request->boolean('is_active');
 
         return $data;
+    }
+
+    private function rentalServices(string $resource)
+    {
+        if ($resource !== 'rental-items') {
+            return collect();
+        }
+
+        return Service::query()
+            ->where('category', 'penyewaan')
+            ->orderBy('sort_order')
+            ->get();
     }
 }
