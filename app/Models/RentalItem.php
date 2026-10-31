@@ -27,6 +27,10 @@ class RentalItem extends Model
 
     public function photoUrl(): ?string
     {
+        if ($this->photo && str_starts_with($this->photo, 'dummy-rental/')) {
+            return asset('assets/'.$this->photo);
+        }
+
         return $this->photo && Storage::disk('public')->exists($this->photo)
             ? Storage::disk('public')->url($this->photo)
             : null;

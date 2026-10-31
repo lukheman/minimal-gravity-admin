@@ -19,14 +19,24 @@ class PublicPageController extends Controller
 
     public function services(): View
     {
-        return view('guest.services', ['services' => Service::query()->where('is_active', true)->orderBy('sort_order')->get(), 'settings' => SiteContent::settings()]);
+        return view('guest.services', [
+            'services' => Service::query()
+                ->where('is_active', true)
+                ->orderByRaw("CASE WHEN category = 'penyewaan' THEN 0 ELSE 1 END")
+                ->orderBy('sort_order')
+                ->get(),
+            'settings' => SiteContent::settings(),
+        ]);
     }
 
     public function service(Service $service): View
     {
         abort_unless($service->is_active, 404);
 
-        return view('guest.service-detail', ['service' => $service->load('rentalItems'), 'settings' => SiteContent::settings()]);
+        return view('guest.service-detail', [
+            'service' => $service->load(['rentalItems' => fn ($query) => $query->where('is_active', true)]),
+            'settings' => SiteContent::settings(),
+        ]);
     }
 
     public function collaborations(): View

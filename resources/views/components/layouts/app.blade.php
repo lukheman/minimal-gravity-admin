@@ -13,6 +13,10 @@
 
     <link rel="stylesheet" href="{{ asset('assets/fontawesome-free-7.2.0-web/css/all.min.css')}}">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css')}}">
 
     <link rel="stylesheet" href="{{ asset('assets/css/customize-theme.css')}}">
@@ -28,10 +32,20 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+            font-family: 'Archivo', sans-serif;
+            font-weight: 700;
+            letter-spacing: -.02em;
+        }
+
+        h1, .h1 {
+            font-weight: 800;
         }
 
         .sidebar {
@@ -539,7 +553,8 @@
         <x-layout.sidebar-section title="Main">
             <x-layout.sidebar-link href="{{ route('dashboard') }}" icon="fas fa-home" :active="request()->routeIs('dashboard')">Dashboard</x-layout.sidebar-link>
             <x-layout.sidebar-link href="{{ route('admin.users') }}" icon="fas fa-users" :active="request()->routeIs('admin.users')">Users</x-layout.sidebar-link>
-            <x-layout.sidebar-link href="{{ route('admin.content.index', 'services') }}" icon="fas fa-calendar-check" :active="request()->is('admin/content/*')">Konten EO</x-layout.sidebar-link>
+            <x-layout.sidebar-link href="{{ route('admin.content.index', 'rental-items') }}" icon="fas fa-box-open" :active="request()->is('admin/content/rental-items*')">Katalog Sewa</x-layout.sidebar-link>
+            <x-layout.sidebar-link href="{{ route('admin.content.index', 'services') }}" icon="fas fa-calendar-check" :active="request()->is('admin/content/services*') || request()->is('admin/content/collaborations*') || request()->is('admin/content/testimonials*') || request()->is('admin/content/social-links*')">Konten EO</x-layout.sidebar-link>
             <x-layout.sidebar-link href="{{ route('admin.settings') }}" icon="fas fa-sliders" :active="request()->routeIs('admin.settings*')">Profil & Kontak</x-layout.sidebar-link>
         </x-layout.sidebar-section>
 

@@ -24,7 +24,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/fontawesome-free-7.2.0-web/css/all.min.css') }}">
 
@@ -39,13 +39,37 @@
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 400;
             color: var(--ink);
             background: #fbfcfa;
+            -webkit-font-smoothing: antialiased;
         }
 
-        h1, h2, h3, .display-font {
-            font-family: 'Playfair Display', serif;
+        h1, h2, h3, h4, h5, h6, .display-font {
+            font-family: 'Archivo', sans-serif;
+            font-weight: 800;
+            letter-spacing: -.025em;
+            line-height: 1.15;
+        }
+
+        h4, h5, h6 {
+            font-weight: 700;
+        }
+
+        .display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+            font-family: 'Archivo', sans-serif;
+            font-weight: 800;
+            letter-spacing: -.03em;
+            line-height: 1.08;
+        }
+
+        .lead {
+            font-weight: 500;
+        }
+
+        .fw-semibold {
+            font-weight: 600 !important;
         }
 
         .navbar {
@@ -54,11 +78,12 @@
         }
 
         .brand {
-            font-weight: 700;
+            font-family: 'Archivo', sans-serif;
+            font-weight: 800;
             font-size: 1.3rem;
             color: var(--ink);
             text-decoration: none;
-            letter-spacing: -.02em;
+            letter-spacing: -.03em;
         }
 
         .brand i {
@@ -67,7 +92,7 @@
 
         .navbar .nav-link {
             color: #385553 !important;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .navbar .nav-link:hover,
@@ -124,8 +149,9 @@
         }
 
         .eyebrow {
+            font-family: 'Archivo', sans-serif;
             color: var(--teal);
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: .12em;
             text-transform: uppercase;
             font-size: .72rem;
@@ -169,9 +195,11 @@
         }
 
         .stat-value {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Archivo', sans-serif;
+            font-weight: 800;
             font-size: 1.9rem;
             line-height: 1;
+            letter-spacing: -.03em;
             color: var(--teal);
         }
 
@@ -275,6 +303,7 @@
         </button>
         <div id="siteNav" class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}#katalog">Katalog Sewa</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">Tentang</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('services*') ? 'active' : '' }}" href="{{ route('services') }}">Layanan</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('collaborations*') ? 'active' : '' }}" href="{{ route('collaborations') }}">Kerja Sama</a></li>
@@ -297,7 +326,7 @@
         <div class="row g-4 pb-4">
             <div class="col-lg-5">
                 <div class="h4 display-font text-white mb-2">{{ $siteName }}</div>
-                <p class="mb-3 text-white-50">{{ $settings['footer_tagline'] ?? 'Partner acara profesional untuk momen penting Anda.' }}</p>
+                <p class="mb-3 text-white-50">{{ $settings['footer_tagline'] ?? 'Sewa perlengkapan event dengan antar, pasang, dan penarikan.' }}</p>
                 <div class="footer-social d-flex gap-2">
                     @foreach ($socialLinks as $link)
                         <a href="{{ $link->url }}" target="_blank" rel="noopener" aria-label="{{ $link->platform }}" title="{{ $link->platform }}">
@@ -309,6 +338,7 @@
             <div class="col-6 col-lg-3">
                 <div class="text-white fw-semibold mb-3">Jelajahi</div>
                 <div class="d-flex flex-column gap-2">
+                    <a href="{{ route('home') }}#katalog">Katalog Sewa</a>
                     <a href="{{ route('about') }}">Tentang Kami</a>
                     <a href="{{ route('services') }}">Layanan</a>
                     <a href="{{ route('collaborations') }}">Kerja Sama</a>
